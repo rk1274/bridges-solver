@@ -1,11 +1,11 @@
 import unittest
-from solver.solver import set_possible_connections,make_connections, start, sort, get_and_populate_numbers, handle_mandatory_connections, handle_reducible_connections
-from board.board import Board
-from board.tile import NumberTile
+from backend.solver.solver import set_possible_connections,make_connections, start, sort, get_and_populate_numbers, handle_mandatory_connections, handle_reducible_connections
+from backend.board.board import Board
+from backend.board.tile import NumberTile
 import json
 
 def load_boards():
-    with open("tests/boards.json", "r") as file:
+    with open("bridges-solver/boards.json", "r") as file:
         return json.load(file)
 
 class TestBridgesSolver(unittest.TestCase):

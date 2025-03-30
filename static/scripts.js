@@ -15,11 +15,9 @@ document.getElementById('load-board').addEventListener('click', async () => {
     document.getElementById('solve-board').disabled = false;
 
     board = data
-    console.log("load", board)
 });
 
 document.getElementById('solve-board').addEventListener('click', async () => {
-    // const grid = getCurrentBoard(); // Collect current grid state
     const response = await fetch('/solve', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -28,12 +26,12 @@ document.getElementById('solve-board').addEventListener('click', async () => {
 
     const data = await response.json();
 
-    renderBoard(data.solved_grid); // Render the solved grid
+    renderBoard(data.solved_grid);
 });
 
 function renderBoard(grid) {
     const container = document.getElementById('board-container');
-    container.innerHTML = ''; // Clear previous board
+    container.innerHTML = '';
 
     grid.forEach((row) => {
         const rowDiv = document.createElement('div');
@@ -80,4 +78,42 @@ function renderBoard(grid) {
     });
 }
 
+document.getElementById('make-board').addEventListener('click', async () => {
+    const matrix = Array.from({ length: 20 }, () => Array(16).fill(0));
+    console.log("cliocked")
+    renderPlainboard(matrix);
+});
 
+function renderPlainboard(grid) {
+    const container = document.getElementById('board-container');
+    container.innerHTML = '';
+
+    grid.forEach((row) => {
+        const rowDiv = document.createElement('div');
+        rowDiv.className = 'board-row';
+
+        row.forEach((cell) => {
+        const cellDiv = document.createElement('button');
+        cellDiv.className = 'grid-input';
+
+        cellDiv.addEventListener('click', () => {
+            // Check if the button is blank (empty text content)
+            if (cellDiv.textContent === '') {
+                cellDiv.textContent = '1'; // Start with 1 if blank
+            } else {
+                // Increment the value if it already has a number
+                const currentValue = parseInt(cellDiv.textContent, 10); // Convert to number
+                cellDiv.textContent = currentValue + 1; // Increment by 1
+            }
+
+            cellDiv.className = 'number-cell'; // Optionally update the class
+        });
+
+        rowDiv.appendChild(cellDiv);
+});
+
+
+
+        container.appendChild(rowDiv);
+    });
+}

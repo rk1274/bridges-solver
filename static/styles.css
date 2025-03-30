@@ -44,10 +44,16 @@ body {
     align-items: stretch;
 }
 
+.grid-input {
+    background-color: #F6F1DE;
+    border: 1px solid #3E3F5B;
+}
+
 .cell,
 .number-cell,
 .horizontal-connection-wrapper,
-.vertical-connection-wrapper {
+.vertical-connection-wrapper,
+.grid-input {
     width: 22px;
     height: 22px;
     margin: 3px;
@@ -60,6 +66,7 @@ body {
 }
 
 .number-cell {
+    color: #F6F1DE;
     font-size: 15px;
     font-weight: bold;
     border: 1px solid #3E3F5B;

@@ -6,7 +6,7 @@ from backend.solver.solver import process_and_solve_grid
 app = Flask(__name__)
 
 # Load boards
-with open('backend/tests/boards.json') as f:
+with open('boards.json') as f:
     boards = json.load(f)
 
 
