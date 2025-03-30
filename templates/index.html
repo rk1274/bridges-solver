@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hashi Solver</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Hashiwokakero Solver</h1>
+
+    <label for="board-select">Select a Puzzle:</label>
+    <select id="board-select">
+        <option value="">--Choose a Board--</option>
+        {% for name in board_names %}
+        <option value="{{ name }}">{{ name }}</option>
+        {% endfor %}
+    </select>
+
+    <button id="load-board">Load Board</button>
+    <button id="solve-board" disabled>Solve</button>
+
+    <div id="board-container">
+        <!-- Board will be rendered here dynamically -->
+    </div>
+
+    <script src="/static/scripts.js"></script>
+</body>
+</html>

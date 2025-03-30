@@ -113,6 +113,9 @@ class ConnectionTile:
         self._connections = 0
         self._is_horizontal = False
 
+    def __str__(self):
+        return self.display()
+
     def display(self):
         if self._connections == 0:
             return "  "

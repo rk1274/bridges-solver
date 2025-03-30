@@ -1,9 +1,20 @@
 import copy
 
-from board.tile import NumberTile
-from board.direction import Direction
+from backend.board.tile import NumberTile
+from backend.board.board import Board
+from backend.board.direction import Direction
 
 process = [""]
+
+def process_and_solve_grid(data):
+    board = Board(data["height"], data["width"])
+
+    for i, row in enumerate(data["grid"]):
+        for j, cell in enumerate(row):
+            if data["grid"][i][j].isnumeric():
+                board.set_number(NumberTile(int(data["grid"][i][j]), i, j, ))
+
+    return start(board)
 
 def start(grid):
     numbers = get_and_populate_numbers(grid.grid)
