@@ -45,8 +45,8 @@ function renderBoard(grid) {
 
             if (!isNaN(cell) && cell.trim() !== '') {
                 cellDiv.classList.add('number-cell');
-
                 cellDiv.textContent = cell;
+
             } else if (cell.includes('-') || cell.includes('=')) {
                 cellDiv.classList.add('horizontal-connection-wrapper');
 
@@ -54,6 +54,7 @@ function renderBoard(grid) {
                 for (let i = 0; i < numLines; i++) {
                     const line = document.createElement('div');
                     line.className = 'con-horizontal';
+                    if (numLines === 2) line.classList.add('double');
 
                     cellDiv.appendChild(line);
                 }
@@ -64,6 +65,7 @@ function renderBoard(grid) {
                 for (let i = 0; i < numLines; i++) {
                     const line = document.createElement('div');
                     line.className = 'con-vertical';
+                    if (numLines === 2) line.classList.add('double');
 
                     cellDiv.appendChild(line);
                 }
@@ -77,4 +79,5 @@ function renderBoard(grid) {
         container.appendChild(rowDiv);
     });
 }
+
 

@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c6acb2fd-3a85-4ad1-aebe-e140f678a2d5" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/board/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/board/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/board/board.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/board/board.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/board/direction.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/board/direction.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/board/tile.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/board/tile.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/solver/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/solver/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/solver/solver.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/solver/solver.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/boards.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/tests/boards.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_solver.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/tests/test_solver.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/scripts.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/scripts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +141,7 @@
       <workItem from="1742581316465" duration="14499000" />
       <workItem from="1742649796884" duration="6580000" />
       <workItem from="1743362548717" duration="2456000" />
-      <workItem from="1743365146547" duration="5184000" />
+      <workItem from="1743365146547" duration="7069000" />
     </task>
     <servers />
   </component>

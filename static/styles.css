@@ -1,12 +1,41 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
+    background-color: #F6F1DE;
+    color: #3E3F5B;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu-buttons button{
+    background-color: #3E3F5B;
+    width: 150px;
+    height: 40px;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+    color: #F6F1DE;
+    border-radius: 10px;
 }
 
 #board-container {
     margin: 20px auto;
     display: inline-block;
-    border: 1px solid #ccc;
+    border: 2px solid #3E3F5B;
+    border-radius: 10px;
+    color: #F6F1DE;
+    padding: 10px;
 }
 
 .board-row {
@@ -33,7 +62,8 @@ body {
 .number-cell {
     font-size: 15px;
     font-weight: bold;
-    border: 1px solid black;
+    border: 1px solid #3E3F5B;
+    background-color: #3E3F5B;
     border-radius: 50px;
 }
 
@@ -41,26 +71,68 @@ body {
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+    position: relative;
+
 }
 
 .vertical-connection-wrapper {
-    flex-grow: 1;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    position: relative;
 }
 
 
 .con-horizontal {
-    width: calc(100% + 8px);
+    width: 200%;
     height: 2px;
-    background-color: black;
+    background-color: #3E3F5B;
     margin: 0;
 }
 
 .con-vertical {
-    height: calc(100% + 8px);
+    height: 200%;
     width: 2px;
-    background-color: black;
+    background-color: #3E3F5B;
     margin: 0;
+}
+
+.menu-select {
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.menu-select label {
+    font-size: 16px;
+    color: #333;
+}
+
+#board-select {
+    width: 250px;
+    padding: 8px 10px;
+    font-size: 16px;
+    color: #333;
+    background-color: #f9f9f9;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: border-color 0.3s, background-color 0.3s;
+}
+
+#board-select:hover, #board-select:focus {
+    border-color: #007BFF;
+    background-color: #fff;
+    outline: none;
+}
+
+#board-select option {
+    padding: 8px;
+    font-size: 14px;
+    color: #333;
 }
