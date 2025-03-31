@@ -9,6 +9,11 @@
 <body>
     <h1>Bridges Solver</h1>
 
+    <div id="login-section">
+        <!-- Login will be rendered here depending on current login status -->
+    </div>
+
+
     <div class="menu">
         <div class="menu-select">
             <label for="board-select">Select a Puzzle:</label>
@@ -24,6 +29,9 @@
             <button id="load-board">Load Board</button>
             <button id="solve-board" disabled>Solve</button>
             <button id="make-board">Make</button>
+            <label for="board-name">Name for this grid:</label>
+            <input type="text" id="board-name" placeholder="..." />
+            <button id="submit-board">Submit Board</button>
         </div>
     </div>
 

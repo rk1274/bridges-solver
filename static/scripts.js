@@ -81,10 +81,10 @@ function renderBoard(grid) {
 document.getElementById('make-board').addEventListener('click', async () => {
     const matrix = Array.from({ length: 20 }, () => Array(16).fill(0));
     console.log("cliocked")
-    renderPlainboard(matrix);
+    render_plain_board(matrix);
 });
 
-function renderPlainboard(grid) {
+function render_plain_board(grid) {
     const container = document.getElementById('board-container');
     container.innerHTML = '';
 
@@ -93,27 +93,180 @@ function renderPlainboard(grid) {
         rowDiv.className = 'board-row';
 
         row.forEach((cell) => {
-        const cellDiv = document.createElement('button');
-        cellDiv.className = 'grid-input';
+            const cellDiv = document.createElement('button');
+            cellDiv.className = 'grid-input';
 
-        cellDiv.addEventListener('click', () => {
-            // Check if the button is blank (empty text content)
-            if (cellDiv.textContent === '') {
-                cellDiv.textContent = '1'; // Start with 1 if blank
-            } else {
-                // Increment the value if it already has a number
-                const currentValue = parseInt(cellDiv.textContent, 10); // Convert to number
-                cellDiv.textContent = currentValue + 1; // Increment by 1
-            }
+            cellDiv.addEventListener('click', () => {
+                if (cellDiv.textContent === '') {
+                    cellDiv.textContent = '1';
+                } else {
+                    const currentValue = parseInt(cellDiv.textContent, 10);
+                    cellDiv.textContent = currentValue + 1;
+                }
 
-            cellDiv.className = 'number-cell'; // Optionally update the class
+                cellDiv.className = 'number-cell';
+            });
+
+            rowDiv.appendChild(cellDiv);
         });
-
-        rowDiv.appendChild(cellDiv);
-});
-
-
 
         container.appendChild(rowDiv);
     });
 }
+
+document.getElementById('submit-board').addEventListener('click', async () => {
+    let populatedBoard = getBoardFromContainer();
+
+    await submitBoard(populatedBoard);
+});
+
+const getBoardFromContainer = () => {
+    const container = document.getElementById('board-container');
+
+    const matrix = [];
+
+    const rows = container.querySelectorAll('.board-row');
+    rows.forEach((row) => {
+        const rowValues = [];
+
+        const cells = row.querySelectorAll('.grid-input, .number-cell');
+        cells.forEach((cell) => {
+            rowValues.push(cell.textContent);
+        });
+
+        matrix.push(rowValues);
+    });
+
+    return matrix
+};
+
+const submitBoard = async (board) => {
+    const boardWidth = board[0].length;
+    const boardHeight = board.length;
+
+    console.log("submit clicked")
+
+    const boardName = document.getElementById('board-name').value;
+    if (!boardName) return alert('Please enter a name for the board!');
+
+    const response = await fetch('/add-board', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: boardName,
+            width: boardWidth,
+            height: boardHeight,
+            grid: board
+        })
+    });
+
+    const result = await response.json();
+    if (response.ok) {
+        alert('Board added successfully!');
+    } else {
+        alert(`Error: ${result.error}`);
+    }
+
+    await updateAvailableBoards();
+};
+
+const checkLoginStatus = async () => {
+    try {
+        const response = await fetch('/get_login_status\n', { method: 'GET' });
+        const data = await response.json();
+        const loginSection = document.getElementById('login-section');
+
+        if (data.logged_in_as) {
+            loginSection.innerHTML = `
+                <p id="greeting">Hello, ${data.logged_in_as}!</p>
+                <button id="logout-button">Logout</button>
+            `;
+
+            disableSubmitButton();
+
+            document.getElementById('logout-button').addEventListener('click', logout);
+        } else {
+            loginSection.innerHTML = `
+                <h2>Login</h2>
+                <input type="text" id="username" placeholder="Username" />
+                <input type="password" id="password" placeholder="Password" />
+                <button id="login-button">Login</button>
+                <p id="login-status"></p>
+            `;
+
+            enableSubmitButton()
+
+            document.getElementById('login-button').addEventListener('click', login);
+        }
+    }
+    catch (error) {
+        console.error('Error checking login status:', error);
+    }
+}
+
+const logout = async () => {
+     const logoutResponse = await fetch('/logout', { method: 'POST' });
+
+     if (logoutResponse.ok) {
+         await checkLoginStatus();
+         await updateAvailableBoards();
+     } else {
+         document.getElementById('login-status').textContent = `Failed to logout. Try again.`;
+     }
+}
+
+const login = async () => {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    const loginResponse = await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+    });
+
+    const loginData = await loginResponse.json();
+
+    if (loginResponse.ok) {
+        await checkLoginStatus();
+        await updateAvailableBoards();
+    } else {
+        document.getElementById('login-status').textContent = `Error: ${loginData.error}`;
+    }
+}
+
+const updateAvailableBoards = async () => {
+    try {
+        const response = await fetch('/get-boards', { method: 'GET' });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch board data');
+        }
+
+        const boardNames = await response.json();
+
+        const dropdown = document.getElementById('board-select');
+        dropdown.innerHTML = '';
+
+        boardNames.forEach((boardName) => {
+            const option = document.createElement('option');
+            option.value = boardName;
+            option.textContent = boardName;
+            dropdown.appendChild(option);
+        });
+    } catch (error) {
+        console.error('Failed to update dropdown:', error);
+    }
+}
+
+const enableSubmitButton = () => {
+    document.getElementById('submit-board').disabled = true;
+}
+
+const disableSubmitButton = () => {
+    document.getElementById('submit-board').disabled = false;
+}
+
+window.onload = checkLoginStatus;
