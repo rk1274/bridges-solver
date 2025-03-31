@@ -193,12 +193,14 @@ const checkLoginStatus = async () => {
                 <input type="text" id="username" placeholder="Username" />
                 <input type="password" id="password" placeholder="Password" />
                 <button id="login-button">Login</button>
+                <button id="signup-button">Sign up</button>
                 <p id="login-status"></p>
             `;
 
             enableSubmitButton()
 
             document.getElementById('login-button').addEventListener('click', login);
+            document.getElementById('signup-button').addEventListener('click', signup);
         }
     }
     catch (error) {
@@ -232,6 +234,25 @@ const login = async () => {
     if (loginResponse.ok) {
         await checkLoginStatus();
         await updateAvailableBoards();
+    } else {
+        document.getElementById('login-status').textContent = `Error: ${loginData.error}`;
+    }
+}
+
+const signup = async () => {
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    const loginResponse = await fetch('/sign_up\n', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+    });
+
+    const loginData = await loginResponse.json();
+
+    if (loginResponse.ok) {
+        await checkLoginStatus();
     } else {
         document.getElementById('login-status').textContent = `Error: ${loginData.error}`;
     }

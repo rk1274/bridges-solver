@@ -116,7 +116,6 @@ def login():
     if not username or not password:
         return jsonify({"error": "Username and password are required"}), 400
 
-    # Check the credentials in the database
     conn = get_db_connection()
     user = conn.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, password)).fetchone()
     conn.close()
@@ -124,15 +123,40 @@ def login():
     if user is None:
         return jsonify({"error": "Invalid username or password"}), 401
 
-    # Store the username in the session
     session['username'] = username
     return jsonify({"message": "Login successful!", "username": username}), 200
 
 @app.route('/logout', methods=['POST'])
 def logout():
     """Log out the user."""
-    session.pop('username', None)  # Remove the username from the session
+    session.pop('username', None)
     return jsonify({"message": "Logged out successfully!"}), 200
+
+@app.route('/sign_up', methods=['POST'])
+def sign_up():
+    """sign up a user."""
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+
+    if not username or not password:
+        return jsonify({"error": "Username and password are required"}), 400
+
+    conn = get_db_connection()
+
+    existing_user = conn.execute("SELECT * FROM users WHERE username = ? ", (username,)).fetchone()
+    if existing_user:
+        conn.close()
+
+        return jsonify({"error": "Username already exists"}), 409
+
+    conn.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
+
+    conn.commit()
+    conn.close()
+
+    session['username'] = username
+    return jsonify({"message": "Sign up successful!", "username": username}), 201
 
 @app.route('/get_login_status', methods=['GET'])
 def get_login_status():
