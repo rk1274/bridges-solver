@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Load Bridges Solver</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <button onclick="window.location.href='/'">Home</button>
+            <button>Load</button>
+            <button onclick="window.location.href='/make'">Make</button>
+        </nav>
+    </header>
+
+    <h1>Load a Board</h1>
+    <div class="menu">
+        <div class="menu-select">
+            <label for="board-select">Select a Puzzle:</label>
+            <select id="board-select">
+                <option value="">--Choose a Board--</option>
+                {% for name in board_names %}
+                <option value="{{ name }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="menu-buttons">
+            <button id="load-board">Load Board</button>
+            <button id="solve-board" disabled>Solve</button>
+        </div>
+    </div>
+
+    <div id="board-container">
+        <!-- Board will be rendered here dynamically -->
+    </div>
+
+    <script src="/static/js/load.js"></script>
+</body>
+</html>

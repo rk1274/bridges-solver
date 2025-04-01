@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make Bridges Solver</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <button onclick="window.location.href='/'">Home</button>
+            <button onclick="window.location.href='/load'">Load</button>
+            <button>Make</button>
+        </nav>
+    </header>
+
+    <h1>Make a Board</h1>
+    <div class="menu">
+        <div class="menu-buttons">
+            <button id="clear-board">Clear</button>
+            <label for="board-name">Name for this grid:</label>
+            <input type="text" id="board-name" placeholder="..." />
+            <button id="submit-board">Submit Board</button>
+        </div>
+    </div>
+
+    <div id="board-container">
+        <!-- Board will be rendered here dynamically -->
+    </div>
+
+    <script src="/static/js/make.js" type="module"></script>
+</body>
+</html>
