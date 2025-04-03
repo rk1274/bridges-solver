@@ -29,7 +29,8 @@ body {
     border-radius: 10px;
 }
 
-#board-container {
+#board-container,
+#make-board-container {
     margin: 20px auto;
     display: inline-block;
     border: 2px solid #3E3F5B;
@@ -142,4 +143,71 @@ body {
     padding: 8px;
     font-size: 14px;
     color: #333;
+}
+
+.hidden {
+    display: none;
+}
+
+.navbar {
+    display: flex;
+    gap: 50px;
+}
+
+.nav-button {
+  align-items: center;
+  background-color: #fee6e3;
+  border: 2px solid #111;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #111;
+  cursor: pointer;
+  display: flex;
+  font-family: Inter,sans-serif;
+  font-size: 16px;
+  height: 48px;
+  justify-content: center;
+  line-height: 24px;
+  max-width: 100%;
+  padding: 0 25px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.nav-button:after {
+  background-color: #111;
+  border-radius: 8px;
+  content: "";
+  display: block;
+  height: 48px;
+  left: 0;
+  width: 100%;
+  position: absolute;
+  top: -2px;
+  transform: translate(8px, 8px);
+  transition: transform .2s ease-out;
+  z-index: -1;
+}
+
+.nav-button:hover:after {
+  transform: translate(0, 0);
+}
+
+.nav-button:active {
+  background-color: #ffdeda;
+  outline: 0;
+}
+
+.nav-button:hover {
+  outline: 0;
+}
+
+@media (min-width: 768px) {
+  .nav-button {
+    padding: 0 40px;
+  }
 }

@@ -1,6 +1,48 @@
 let board
 
-document.getElementById('load-board').addEventListener('click', async () => {
+const container = document.getElementById('solve-container');
+const otherContainer = document.getElementById('make-container');
+
+export const renderLoad = async () => {
+    console.debug("render load")
+
+    container.classList.remove('hidden');
+    otherContainer.classList.add('hidden');
+
+    await updateBoardDropdown()
+
+    document.getElementById('load-board').addEventListener('click', loadBoard)
+
+    document.getElementById('solve-board').addEventListener('click', solveBoard)
+}
+
+const updateBoardDropdown = async () => {
+    try {
+        const response = await fetch('/get-boards', { method: 'GET' });
+
+        if (response.ok) {
+            const boardNames = await response.json();
+
+            const dropdown = document.getElementById('board-select');
+            dropdown.innerHTML = '<option value="">--Choose a Board--</option>';
+
+            boardNames.forEach((name) => {
+                const option = document.createElement('option');
+                option.value = name;
+                option.textContent = name;
+                dropdown.appendChild(option);
+            });
+        } else {
+            console.error('Failed to fetch board names:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error updating board dropdown:', error);
+    }
+};
+
+
+
+const loadBoard = async () => {
     const boardName = document.getElementById('board-select').value;
     if (!boardName) return alert('Please select a board!');
 
@@ -15,9 +57,9 @@ document.getElementById('load-board').addEventListener('click', async () => {
     document.getElementById('solve-board').disabled = false;
 
     board = data
-});
+}
 
-document.getElementById('solve-board').addEventListener('click', async () => {
+const solveBoard = async () => {
     const response = await fetch('/solve', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -27,7 +69,7 @@ document.getElementById('solve-board').addEventListener('click', async () => {
     const data = await response.json();
 
     renderBoard(data.solved_grid);
-});
+}
 
 function renderBoard(grid) {
     const container = document.getElementById('board-container');

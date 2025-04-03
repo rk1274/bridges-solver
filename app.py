@@ -37,15 +37,7 @@ def get_db_connection():
 
 @app.route('/')
 def index():
-    return render_template('index.html', board_names=get_board_names())
-
-@app.route('/load')
-def load():
-    return render_template('load.html', board_names=get_board_names())
-
-@app.route('/make')
-def make():
-    return render_template('make.html')
+    return render_template('index.html')
 
 @app.route('/load-board', methods=['POST'])
 def load_board():

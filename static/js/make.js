@@ -1,6 +1,24 @@
-document.getElementById('clear-board').addEventListener('click', async () => {
+const container = document.getElementById('make-container');
+const otherContainer = document.getElementById('solve-container');
+
+export const renderMake = () => {
+    container.classList.remove('hidden');
+    otherContainer.classList.add('hidden');
+
+    document.getElementById('clear-board').addEventListener('click', async () => {
+        console.log("clear clicked")
+
+        displayBoard()
+    });
+
+    document.getElementById('submit-board').addEventListener('click', async () => {
+        let populatedBoard = getBoardFromContainer();
+
+        await submitBoard(populatedBoard);
+    });
+
     displayBoard()
-});
+}
 
 const displayBoard = () => {
     const matrix = Array.from({ length: 20 }, () => Array(16).fill(0));
@@ -9,7 +27,7 @@ const displayBoard = () => {
 }
 
 function render_plain_board(grid) {
-    const container = document.getElementById('board-container');
+    const container = document.getElementById('make-board-container');
     container.innerHTML = '';
 
     grid.forEach((row) => {
@@ -38,14 +56,8 @@ function render_plain_board(grid) {
     });
 }
 
-document.getElementById('submit-board').addEventListener('click', async () => {
-    let populatedBoard = getBoardFromContainer();
-
-    await submitBoard(populatedBoard);
-});
-
 const getBoardFromContainer = () => {
-    const container = document.getElementById('board-container');
+    const container = document.getElementById('make-board-container');
 
     const matrix = [];
 
@@ -93,5 +105,3 @@ const submitBoard = async (board) => {
         alert(`Error: ${result.error}`);
     }
 };
-
-window.onload = displayBoard;

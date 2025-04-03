@@ -5,12 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c6acb2fd-3a85-4ad1-aebe-e140f678a2d5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/static/js/auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/grids.db" beforeDir="false" afterPath="$PROJECT_DIR$/grids.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/scripts.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/load.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/load.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/make.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/make.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/load.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/make.html" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
