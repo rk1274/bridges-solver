@@ -8,40 +8,40 @@
 </head>
 <body>
     <header>
-        <nav class="navbar">
-            <button class="nav-button" id="home-button">Home</button>
-            <button class="nav-button" id="load-button">Load</button>
-            <button class="nav-button" id="make-button">Make</button>
-        </nav>
+        <div class="header-nav">
+            <h1>Bridges Solver</h1>
+            <nav class="navbar">
+                <button class="nav-button" id="home-button">Home</button>
+                <button class="nav-button" id="load-button">Load</button>
+                <button class="nav-button" id="make-button">Make</button>
+            </nav>
+        </div>
+        <div id="login-section">
+            <!-- Login will be rendered here depending on current login status -->
+        </div>
     </header>
 
-    <h1>Bridges Solver</h1>
-
-    <div id="login-section">
-        <!-- Login will be rendered here depending on current login status -->
-    </div>
-
-    <div id="solve-container" class="hidden">
-        <h1>Load a Board</h1>
-        <div class="menu">
-            <div class="menu-select">
-                <label for="board-select">Select a Puzzle:</label>
-                <select id="board-select">
-                </select>
+    <div class="containers">
+        <div id="solve-container" class="hidden">
+            <div class="solve-menu">
+                <h1>Load and solve a board</h1>
+                <div class="menu">
+                    <div class="menu-select">
+                        <label for="board-select">Select a Puzzle:</label>
+                        <select id="board-select"></select>
+                    </div>
+                    <div class="menu-buttons">
+                        <button id="load-board">Load Board</button>
+                        <button id="solve-board" disabled>Solve</button>
+                    </div>
+                </div>
             </div>
 
-            <div class="menu-buttons">
-                <button id="load-board">Load Board</button>
-                <button id="solve-board" disabled>Solve</button>
+            <div id="board-container" class="solve-board">
+                <!-- Board will be rendered here dynamically -->
             </div>
         </div>
-
-        <div id="board-container">
-            <!-- Board will be rendered here dynamically -->
-        </div>
-    </div>
-
-    <div id="make-container" class="hidden">
+        <div id="make-container" class="hidden">
         <h1>Make a Board</h1>
         <div class="menu">
             <div class="menu-buttons">
@@ -56,6 +56,8 @@
             <!-- Board will be rendered here dynamically -->
         </div>
     </div>
+    </div>
+
 
     <script src="/static/js/main.js" type="module"></script>
 </body>
