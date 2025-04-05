@@ -1,6 +1,5 @@
-from flask import Flask, render_template, jsonify, request, session, redirect
+from flask import Flask, render_template, jsonify, request, session
 import json
-from backend.board.board import Board
 import sqlite3
 from backend.solver.solver import process_and_solve_grid
 
@@ -8,13 +7,16 @@ app = Flask(__name__)
 app.secret_key = 'your-secret-key'
 
 DB_FILE = "grids.db"
+SEPARATOR = "-"
+GLOBAL_BOARD_NAME = "all"
+ERRORS = {
+    "BOARD_NAME_REQUIRED": {"error": "Invalid input: 'board_name' is required"},
+    "BOARD_NOT_FOUND": {"error": "Board not found"}
+}
 
 def get_board_names():
     conn = get_db_connection()
-
     username = session.get('username')
-
-    print(f"Logged-in username: {username}")
 
     if username:
         boards = conn.execute(
@@ -27,10 +29,9 @@ def get_board_names():
 
     conn.close()
 
-    return [board["name"] for board in boards]
+    return [board["name"].rsplit('-', 1)[0] for board in boards]
 
 def get_db_connection():
-    """Connect to the SQLite database."""
     conn = sqlite3.connect(DB_FILE)
     conn.row_factory = sqlite3.Row
     return conn
@@ -44,13 +45,9 @@ def load_board():
     data = request.json
     board_name = data['board_name']
 
-    conn = get_db_connection()
-
-    board = conn.execute("SELECT * FROM grids WHERE name = ?", (board_name,)).fetchone()
-    conn.close()
-
+    board = find_board(board_name, session.get('username'))
     if board is None:
-        return jsonify({"error": "Board not found"}), 404
+        return jsonify(ERRORS["BOARD_NOT_FOUND"]), 404
 
     board_data = {
         "name": board["name"],
@@ -61,8 +58,29 @@ def load_board():
 
     return jsonify(board_data)
 
+def find_board(board_name, username):
+    board = get_board_from_db(board_name, GLOBAL_BOARD_NAME)
+    if board:
+        return board
+
+    if not username:
+        return None
+
+    return get_board_from_db(board_name, username)
+
+def get_board_from_db(board_name, board_owner):
+    query = "SELECT * FROM grids WHERE name = ?"
+    board_full_name = create_board_name(board_name, board_owner)
+
+    with get_db_connection() as conn:
+        return conn.execute(query, (board_full_name,)).fetchone()
+
+def create_board_name(board_name, board_owner):
+    return f"{board_name}{SEPARATOR}{board_owner}"
+
 @app.route('/solve', methods=['POST'])
 def solve():
+    """Solve the given board."""
     data = request.json
     board_config = data['board']
 
@@ -83,27 +101,25 @@ def add_board():
         return jsonify({"error": "User not logged in"}), 401
 
     username = session['username']
-
     data = request.json
+    name = create_board_name(data.get('name'),username)
 
-    board_name = data.get('name')
-    board_width = data.get('width')
-    board_height = data.get('height')
-    board_matrix = data.get('grid')
     try:
         conn = sqlite3.connect(DB_FILE)
         conn.execute("""
             INSERT INTO grids (name, width, height, grid_data, username)
             VALUES (?, ?, ?, ?, ?)
-        """, (board_name, board_width, board_height, json.dumps(board_matrix), username))
+        """, (name, data.get('width'), data.get('height'), json.dumps(data.get('grid')), username))
         conn.commit()
         conn.close()
         return jsonify({"message": "Board added successfully!"}), 201
 
     except sqlite3.IntegrityError:
+        conn.close()
         return jsonify({"error": "Board with the same name already exists"}), 409
 
     except Exception as e:
+        conn.close()
         return jsonify({"error": str(e)}), 500
 
 @app.route('/login', methods=['POST'])
@@ -116,15 +132,17 @@ def login():
     if not username or not password:
         return jsonify({"error": "Username and password are required"}), 400
 
-    conn = get_db_connection()
-    user = conn.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, password)).fetchone()
-    conn.close()
+    user = get_user_from_db(username, password)
 
     if user is None:
         return jsonify({"error": "Invalid username or password"}), 401
 
     session['username'] = username
     return jsonify({"message": "Login successful!", "username": username}), 200
+
+def get_user_from_db(username, password):
+    with get_db_connection() as conn:
+        return conn.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username,password)).fetchone()
 
 @app.route('/logout', methods=['POST'])
 def logout():
@@ -134,7 +152,7 @@ def logout():
 
 @app.route('/sign_up', methods=['POST'])
 def sign_up():
-    """sign up a user."""
+    """Sign up a user."""
     data = request.json
     username = data.get('username')
     password = data.get('password')

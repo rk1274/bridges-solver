@@ -14,6 +14,8 @@ export const renderMake = () => {
     document.getElementById('submit-board').addEventListener('click', async () => {
         let populatedBoard = getBoardFromContainer();
 
+        console.log("click")
+
         await submitBoard(populatedBoard);
     });
 
