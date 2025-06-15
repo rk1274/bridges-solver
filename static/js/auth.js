@@ -7,7 +7,7 @@ const checkLoginStatus = async () => {
         if (data.logged_in_as) {
             loginSection.innerHTML = `
                 <p id="greeting">Hello, ${data.logged_in_as}!</p>
-                <button id="logout-button">Logout</button>
+                <button class="nav-button" id="logout-button">Logout</button>
             `;
 
             document.getElementById('logout-button').addEventListener('click', logout);
@@ -16,8 +16,8 @@ const checkLoginStatus = async () => {
                 <h2>Login</h2>
                 <input type="text" id="username" placeholder="Username" />
                 <input type="password" id="password" placeholder="Password" />
-                <button id="login-button">Login</button>
-                <button id="signup-button">Sign up</button>
+                <button class="nav-button" id="login-button">Login</button>
+                <button class="nav-button" id="signup-button">Sign up</button>
                 <p id="login-status"></p>
             `;
 

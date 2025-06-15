@@ -9,7 +9,7 @@
 <body>
     <header>
         <div class="header-nav">
-            <h1>Bridges Solver</h1>
+            <img class="logo" src="{{ url_for('static', filename='images/logo-black-filled-01.png') }}" alt="Example Image">
             <nav class="navbar">
                 <button class="nav-button" id="home-button">Home</button>
                 <button class="nav-button" id="load-button">Load</button>
@@ -31,8 +31,8 @@
                         <select id="board-select"></select>
                     </div>
                     <div class="menu-buttons">
-                        <button id="load-board">Load Board</button>
-                        <button id="solve-board" disabled>Solve</button>
+                        <button class="other-button" id="load-board">Load Board</button>
+                        <button class="other-button" id="solve-board" disabled>Solve</button>
                     </div>
                 </div>
             </div>
@@ -45,10 +45,10 @@
         <h1>Make a Board</h1>
         <div class="menu">
             <div class="menu-buttons">
-                <button id="clear-board">Clear</button>
+                <button class="other-button" id="clear-board">Clear</button>
                 <label for="board-name">Name for this grid:</label>
                 <input type="text" id="board-name" placeholder="..." />
-                <button id="submit-board">Submit Board</button>
+                <button class="other-button" id="submit-board">Submit Board</button>
             </div>
         </div>
 
