@@ -2,12 +2,15 @@ let board
 
 const container = document.getElementById('solve-container');
 const otherContainer = document.getElementById('make-container');
+const otherContainer2 = document.getElementById('puzzle-bg');
+
 
 export const renderLoad = async () => {
     console.debug("render load")
 
     container.classList.remove('hidden');
     otherContainer.classList.add('hidden');
+    otherContainer2.classList.add('hidden');
 
     await updateBoardDropdown()
 

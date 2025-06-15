@@ -1,9 +1,12 @@
 const container = document.getElementById('make-container');
 const otherContainer = document.getElementById('solve-container');
+const otherContainer2 = document.getElementById('puzzle-bg');
+
 
 export const renderMake = () => {
     container.classList.remove('hidden');
     otherContainer.classList.add('hidden');
+    otherContainer2.classList.add('hidden');
 
     document.getElementById('clear-board').addEventListener('click', async () => {
         console.log("clear clicked")
